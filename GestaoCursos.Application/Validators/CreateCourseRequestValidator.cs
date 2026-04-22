@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using GestaoCursos.Application.Dtos;
+using GestaoCursos.Application.Dtos.Requests;
 
 namespace GestaoCursos.Application.Validators
 {
@@ -13,6 +13,8 @@ namespace GestaoCursos.Application.Validators
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("A descrição é obrigatória.")
                 .MinimumLength(10).WithMessage("A descrição deve conter ao menos 10 caracteres.");
+            RuleFor(x => x.DurationInHours)
+                .GreaterThan(0).WithMessage("A duração deve ser maior que zero.");
         }
     }
 }

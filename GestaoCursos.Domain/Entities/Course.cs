@@ -3,16 +3,19 @@
     public int Id { get; private set; }
     public string Title { get; private set; }
     public string Description { get; private set; }
+    public int DurationInHours { get; set; }
     public bool Active { get; private set; }
 
     protected Course() { }
 
-    public Course(string title, string description)
+    public Course(string title, string description, int durationInHours)
     {
         ValidateTitle(title);
         ValidateDescription(description);
+        ValidateDuration(durationInHours);
         Title = title;
         Description = description;
+        DurationInHours = durationInHours;
         Active = true;
     }
 
@@ -34,6 +37,12 @@
     {
         if (string.IsNullOrWhiteSpace(description) || description.Length < 10)
             throw new ArgumentException("A descrição deve conter ao menos 10 caracteres.");
+    }
+
+    private void ValidateDuration(int durationInHours)
+    {
+        if (durationInHours <= 0)
+            throw new ArgumentException("A duração deve ser maior que zero.");
     }
 
     public void Deactivate() => Active = false;

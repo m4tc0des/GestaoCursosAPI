@@ -5,7 +5,7 @@ using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace CursoGestao.Application.Configurations;
+namespace GestaoCursos.Application.Configurations;
 
 public static class DependencyInjection
 {
