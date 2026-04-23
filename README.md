@@ -8,7 +8,18 @@
 
 Uma API robusta para gestão de cursos, estudantes e matrículas, desenvolvida para demonstrar práticas avançadas no ecossistema .NET. O foco principal é a **escalabilidade**, **testabilidade** e **separação de responsabilidades**.
 
-Este projeto foi construído utilizando os princípios de **Domain-Driven Design (DDD)**, garantindo que as regras de negócio sejam o coração da aplicação.
+Este projeto utiliza **Domain-Driven Design (DDD)** para proteger as regras de negócio e garantir um código desacoplado e de fácil manutenção.
+
+---
+
+## Diferenciais Técnicos Implementados
+
+O projeto foi evoluído para incluir padrões de mercado utilizados em sistemas de alta criticidade:
+
+- **Soft Delete (Exclusão Lógica)**: Implementação de remoção de registros sem perda de dados históricos, utilizando o controle do campo `Active`.
+- **Granular Patch Updates**: Endpoints específicos para alteração de propriedades sensíveis (Preço e Data de Criação), evitando vulnerabilidades de *Mass Assignment*.
+- **Fluent Mappings**: Configuração avançada do banco de dados via `IEntityTypeConfiguration`, garantindo precisão decimal (18,2) para valores monetários e tipos de data otimizados (`DATE` no MySQL).
+- **Inversão de Dependência**: Interfaces de repositório localizadas no `Domain`, garantindo que o núcleo da aplicação seja independente de detalhes de infraestrutura.
 
 ---
 
@@ -16,19 +27,18 @@ Este projeto foi construído utilizando os princípios de **Domain-Driven Design
 
 A solução segue os princípios da **Clean Architecture**, dividida em:
 
-- **`GestaoCursos.Domain`**: O núcleo (Core). Contém entidades, enums e interfaces. Independente de frameworks.
-- **`GestaoCursos.Application`**: Fluxo da aplicação. Contém serviços, DTOs, validadores e mapeamentos.
-- **`GestaoCursos.Infrastructure`**: Detalhes técnicos. EF Core, Repositórios e Migrations.
-- **`GestaoCursos.Api`**: Camada de entrada. Controllers, Injeção de Dependência e Swagger.
+- **`GestaoCursos.Domain`**: O núcleo (Core). Contém entidades com lógica encapsulada, interfaces e contratos.
+- **`GestaoCursos.Application`**: Orquestração. Contém serviços, DTOs (Requests/Responses), validadores e lógica de mapeamento.
+- **`GestaoCursos.Infrastructure`**: Detalhes técnicos. Implementação do EF Core, Repositórios, Migrations e Mapeamentos Fluentes.
+- **`GestaoCursos.Api`**: Camada de entrada. Controllers RESTful, Configuração de Injeção de Dependência e Documentação.
 
 ### Tech Stack & Main Packages
 
 - **Linguagem:** C# (.NET 8)
 - **Banco de Dados:** MySQL (via **Pomelo.EntityFrameworkCore.MySql**)
 - **ORM:** Entity Framework Core
-- **Mapeamento:** **Mapster** (Alta performance)
-- **Validação:** **FluentValidation.AspNetCore**
-- **Injeção de Dependência:** Microsoft.Extensions.DependencyInjection
+- **Mapeamento:** **Mapster** (Estratégia de alta performance)
+- **Validação:** **FluentValidation**
 - **Documentação:** Swagger/OpenAPI
 
 ---
@@ -44,3 +54,4 @@ A solução segue os princípios da **Clean Architecture**, dividida em:
 1. **Clone o repositório:**
    ```bash
    git clone [https://github.com/m4tc0des/GestaoCursos.git](https://github.com/m4tc0des/GestaoCursos.git)
+   cd GestaoCursos
