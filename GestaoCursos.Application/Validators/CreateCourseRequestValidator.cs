@@ -15,6 +15,8 @@ namespace GestaoCursos.Application.Validators
                 .MinimumLength(10).WithMessage("A descrição deve conter ao menos 10 caracteres.");
             RuleFor(x => x.DurationInHours)
                 .GreaterThan(0).WithMessage("A duração deve ser maior que zero.");
+            RuleFor(x => x.Price)
+                .GreaterThan(0).WithMessage("O preço deve ser maior que zero.");
         }
     }
 }

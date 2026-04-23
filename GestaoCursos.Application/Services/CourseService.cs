@@ -6,7 +6,7 @@ using Mapster;
 
 namespace GestaoCursos.Application.Services
 {
-    public class CourseService: ICourseService
+    public class CourseService : ICourseService
     {
         private readonly ICourseRepository _repository;
 
@@ -30,11 +30,61 @@ namespace GestaoCursos.Application.Services
         public async Task<CourseResponse?> GetByIdAsync(int id)
         {
             var course = await _repository.GetByIdAsync(id);
+
             if (course == null)
             {
                 return null;
             }
             return course.Adapt<CourseResponse>();
+        }
+
+        public async Task<bool> UpdatePriceAsync(int id, decimal price)
+        {
+            var course = await _repository.GetByIdAsync(id);
+
+            if (course == null)
+            {
+                return false;
+            }
+            course.UpdatePrice(price);
+            await _repository.UpdateAsync(course);
+            return true;
+        }
+
+        public async Task<bool> ActivateAsync(int id)
+        {
+            var course = await _repository.GetByIdAsync(id);
+            if (course == null)
+            {
+                return false;
+            }
+            course.Activate();
+            await _repository.UpdateAsync(course);
+            return true;
+        }
+
+        public async Task<bool> DeactivateAsync(int id)
+        {
+            var course = await _repository.GetByIdAsync(id);
+            if (course == null)
+            {
+                return false;
+            }
+            course.Deactivate();
+            await _repository.UpdateAsync(course);
+            return true;
+        }
+
+        public async Task<bool> UpdateCreatedAtAsync(int id, DateTime newDate)
+        {
+            var course = await _repository.GetByIdAsync(id);
+            if (course == null)
+            {
+                return false;
+            }
+            course.UpdateCreatedAt(newDate);
+            await _repository.UpdateAsync(course);
+            return true;    
         }
     }
 }

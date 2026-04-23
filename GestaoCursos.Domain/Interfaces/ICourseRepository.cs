@@ -1,6 +1,4 @@
-﻿using GestaoCursos.Domain.Entities;
-
-namespace GestaoCursos.Domain.Interfaces
+﻿namespace GestaoCursos.Domain.Interfaces
 {
     public interface ICourseRepository
     {
