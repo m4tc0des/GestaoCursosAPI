@@ -10,7 +10,10 @@ public class Course
     public DateTime CreatedAt { get; private set; }
     public bool Active { get; private set; }
 
-    protected Course() { }
+    protected Course() 
+    {
+
+    }
 
     public Course(string title, string description, int durationInHours, decimal price)
     {
