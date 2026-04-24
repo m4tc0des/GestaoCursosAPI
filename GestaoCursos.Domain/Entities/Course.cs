@@ -1,11 +1,13 @@
-﻿public class Course
+﻿using GestaoCursos.Domain.Exceptions;
+
+public class Course
 {
-    public int Id { get; private set; }
+    public int Id { get; set; }
     public string Title { get; private set; }
     public string Description { get; private set; }
-    public int DurationInHours { get; set; }
-    public decimal Price { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public int DurationInHours { get; private set; }
+    public decimal Price { get; private set; }
+    public DateTime CreatedAt { get; private set; }
     public bool Active { get; private set; }
 
     protected Course() { }
@@ -15,7 +17,7 @@
         ValidateTitle(title);
         ValidateDescription(description);
         ValidateDuration(durationInHours);
-        ValidatePrice(Price);
+        ValidatePrice(price);
         Title = title;
         Description = description;
         Price = price;
@@ -35,32 +37,28 @@
 
     public void UpdatePrice(decimal price)
     {
-        ValidatePrice(price);
+        DomainException.When(price <= 0, "O preço deve ser maior que zero.");
         Price = price;
     }
 
     private void ValidateTitle(string title)
     {
-        if (string.IsNullOrWhiteSpace(title) || title.Length < 3)
-            throw new ArgumentException("O titulo deve conter ao menos 3 caracteres.");
+        DomainException.When(string.IsNullOrWhiteSpace(title) || title.Length < 3, "O título deve conter ao menos 3 caracteres.");
     }
 
     private void ValidateDescription(string description)
     {
-        if (string.IsNullOrWhiteSpace(description) || description.Length < 10)
-            throw new ArgumentException("A descrição deve conter ao menos 10 caracteres.");
+        DomainException.When(string.IsNullOrWhiteSpace(description) || description.Length < 10, "A descrição deve conter ao menos 10 caracteres.");
     }
 
     private void ValidateDuration(int durationInHours)
     {
-        if (durationInHours <= 0)
-            throw new ArgumentException("A duração deve ser maior que zero.");
+        DomainException.When(durationInHours <= 0, "A duração deve ser maior que zero.");
     }
 
     private void ValidatePrice(decimal price)
     {
-        if (price <= 0)
-            throw new ArgumentException("O preço não pode ser negativo.");
+        DomainException.When(price <= 0, "O preço não pode ser negativo.");
     }
 
     public void Deactivate() => Active = false;
@@ -69,8 +67,7 @@
 
     public void UpdateCreatedAt(DateTime newDate)
     {
-        if (newDate > DateTime.Now)
-            throw new ArgumentException("A data de criação não pode ser futura.");
+        DomainException.When(newDate > DateTime.Now, "A data de criação não pode ser futura.");
         CreatedAt = newDate;
     }
 }
